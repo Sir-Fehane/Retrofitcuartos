@@ -8,4 +8,7 @@ import retrofit2.http.GET;
 public interface ApiInterface {
     @GET("/api/recibir-datos")
     Call<List<Cuartos>> getCuartos();
+
+    @GET("/Adafruit/recibirdatos")
+    Call<List<Sensores>> getSensores();
 }
