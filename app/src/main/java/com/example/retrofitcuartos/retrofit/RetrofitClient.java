@@ -1,4 +1,6 @@
-package com.example.retrofitcuartos;
+package com.example.retrofitcuartos.retrofit;
+
+import com.example.retrofitcuartos.request.ApiInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

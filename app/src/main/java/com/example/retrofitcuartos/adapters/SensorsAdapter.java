@@ -1,4 +1,4 @@
-package com.example.retrofitcuartos;
+package com.example.retrofitcuartos.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.retrofitcuartos.R;
+import com.example.retrofitcuartos.models.Sensores;
 
 import java.util.List;
 

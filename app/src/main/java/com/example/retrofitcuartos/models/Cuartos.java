@@ -1,4 +1,4 @@
-package com.example.retrofitcuartos;
+package com.example.retrofitcuartos.models;
 
 public class Cuartos {
     private int id;
