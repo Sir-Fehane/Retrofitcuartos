@@ -1,4 +1,4 @@
-package com.example.retrofitcuartos;
+package com.example.retrofitcuartos.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.retrofitcuartos.R;
 import com.example.retrofitcuartos.adapters.CuartosAdapter;
 import com.example.retrofitcuartos.models.Cuartos;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;

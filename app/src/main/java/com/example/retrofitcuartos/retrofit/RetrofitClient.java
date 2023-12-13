@@ -7,9 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL ="http://54.161.51.54/api/auth/";
+    private static final String BASE_URL ="http://54.161.51.54/api/";
     private static Retrofit retrofit = null;
-    public  static ApiInterface getRetrofitClient()
+    public  static Retrofit getRetrofitClient()
     {
         if(retrofit ==null)
         {
@@ -18,6 +18,6 @@ public class RetrofitClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit.create(ApiInterface.class);
+        return retrofit;
     }
 }

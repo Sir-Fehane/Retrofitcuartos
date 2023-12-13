@@ -46,7 +46,6 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
-        fetchsensors(idcuarto);
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -62,23 +61,4 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         notificationManagerCompat = NotificationManagerCompat.from(this);
     }
 
-    private void fetchsensors(int idcuarto) {
-        RetrofitClient.getRetrofitClient().getSensores(idcuarto).enqueue(new Callback<List<Sensores>>() {
-            @Override
-            public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
-                if(response.isSuccessful() && response.body() != null)
-                {
-                    sensList.addAll(response.body());
-                    sns.notifyDataSetChanged();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Sensores>> call, Throwable t) {
-                Toast.makeText(SensoresYAdaptadores.this, t.getMessage(),Toast.LENGTH_LONG).show();
-
-            }
-        });
-    }
 }
