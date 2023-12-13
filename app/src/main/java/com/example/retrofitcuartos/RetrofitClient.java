@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL ="proyecto4to.cwzwdmivlhhv.us-east-1.rds.amazonaws.com";
+    private static final String BASE_URL ="http://54.161.51.54/api/auth/";
     private static Retrofit retrofit = null;
     public  static ApiInterface getRetrofitClient()
     {

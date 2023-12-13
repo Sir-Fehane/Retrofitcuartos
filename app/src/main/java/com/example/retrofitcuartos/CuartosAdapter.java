@@ -33,6 +33,7 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvTitle.setText(cuartoslist.get(position).getNombre());
         holder.tvBody.setText(cuartoslist.get(position).getPropietario());
+        holder.tvID.setText(cuartoslist.get(position).getId());
     }
 
     @Override
@@ -56,10 +57,12 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvTitle;
         TextView tvBody;
+        TextView tvID;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle= itemView.findViewById(R.id.tvTitle);
             tvBody= itemView.findViewById(R.id.tvBody);
+            tvID=itemView.findViewById(R.id.tvID);
         }
     }
 }
