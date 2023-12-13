@@ -1,8 +1,10 @@
 package com.example.retrofitcuartos;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +33,8 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText(cuartoslist.get(position).getNombre());
-        holder.tvBody.setText(cuartoslist.get(position).getPropietario());
-        holder.tvID.setText(cuartoslist.get(position).getId());
+        Cuartos cua = cuartoslist.get(position);
+        holder.setData(cua);
     }
 
     @Override
@@ -58,11 +59,25 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
         TextView tvTitle;
         TextView tvBody;
         TextView tvID;
+        LinearLayout cuarto;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle= itemView.findViewById(R.id.tvTitle);
             tvBody= itemView.findViewById(R.id.tvBody);
             tvID=itemView.findViewById(R.id.tvID);
+        }
+        public void setData(Cuartos cua) {
+            tvTitle.setText(cua.getNombre());
+            tvBody.setText(cua.getPropietario());
+            tvID.setText(cua.getId());
+            cuarto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent sensores = new Intent(itemView.getContext(), SensoresYAdaptadores.class);
+                    sensores.putExtra("id",cua.getId());
+                    itemView.getContext().startActivity(sensores);
+                }
+            });
         }
     }
 }

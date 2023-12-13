@@ -37,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
         rc.setLayoutManager(llm);
         Ca = new CuartosAdapter(cuartosList);
         rc.setAdapter(Ca);
-        Ca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sens = new Intent(MainActivity.this, SensorItems.class);
-                startActivity(sens);
-            }
-        });
         fetchCuartos();
     }
 
