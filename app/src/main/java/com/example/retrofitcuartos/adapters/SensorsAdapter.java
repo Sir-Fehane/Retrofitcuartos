@@ -54,11 +54,14 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         public void setData(Sensores sen) {
             nam.setText(sen.getFeed_key());
             dat.setText(String.valueOf(sen.getValue()));
-            if("temp".equals(sen.getFeed_key())){
+            if("Temperatura".equals(sen.getFeed_key())){
                 sw.setText("Ventilacion");
             }
-            else if("Puerta".equals(sen.getFeed_key())){
-                sw.setText("Luz");
+            else if("NFC".equals(sen.getFeed_key())){
+                sw.setText("Puerta");
+            }
+            else if("Humo".equals(sen.getFeed_key())){
+                sw.setText("Alarma");
             }
             else{
                 sw.setVisibility(View.GONE);
