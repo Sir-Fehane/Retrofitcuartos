@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ public class SensoresYAdaptadores extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensores_yadaptadores);
+        Intent info = getIntent();
+        int idcuarto = info.getIntExtra("id",0);
         rcv = findViewById(R.id.sensorsitem);
         sns = new SensorsAdapter(sensList);
         rcv.setLayoutManager(new LinearLayoutManager(this));
