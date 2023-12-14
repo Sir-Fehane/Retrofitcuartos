@@ -22,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Verificar si hay un token almacenado
+
                 if (hasToken()) {
-                    // Si hay un token, iniciar la actividad principal
+
                     Intent mainIntent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(mainIntent);
                 } else {
-                    // Si no hay un token, iniciar la actividad de inicio de sesión
+
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                 }
