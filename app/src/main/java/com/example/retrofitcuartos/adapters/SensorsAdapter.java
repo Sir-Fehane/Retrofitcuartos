@@ -21,7 +21,7 @@ import retrofit2.Call;
 
 public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.SensorsHolder> {
     private List<Sensores> listsen;
-    private SwitchChangeListener switchChangeListener
+    private SwitchChangeListener switchChangeListener;
 
     @NonNull
     @Override
