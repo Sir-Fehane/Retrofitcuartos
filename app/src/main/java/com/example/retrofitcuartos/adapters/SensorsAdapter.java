@@ -11,25 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitcuartos.R;
 import com.example.retrofitcuartos.models.Sensores;
+import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.request.SwitchChangeListener;
+import com.example.retrofitcuartos.retrofit.RetrofitClient;
 
 import java.util.List;
 
+import retrofit2.Call;
+
 public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.SensorsHolder> {
     private List<Sensores> listsen;
-    private SwitchChangeListener switchChangeListener;
-
-    public SensorsAdapter(List<Sensores> listsen, SwitchChangeListener switchChangeListener) {
-        this.listsen = listsen;
-        this.switchChangeListener = switchChangeListener;
-    }
+    private SwitchChangeListener switchChangeListener
 
     @NonNull
     @Override
     public SensorsAdapter.SensorsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater lyf = LayoutInflater.from(parent.getContext());
         View v = lyf.inflate(R.layout.activity_sensor_items,parent,false);
-        return new SensorsHolder(v);
+        return new SensorsHolder(v, switchChangeListener);
     }
 
     @Override
@@ -51,18 +50,37 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         TextView nam;
         TextView dat;
         Switch sw;
-        public SensorsHolder(@NonNull View itemView) {
+        SwitchChangeListener switchChangeListener;
+        public SensorsHolder(@NonNull View itemView, SwitchChangeListener switchChangeListener) {
             super(itemView);
             nam = itemView.findViewById(R.id.sensor);
             dat = itemView.findViewById(R.id.data);
             sw = itemView.findViewById(R.id.actor);
+            this.switchChangeListener = switchChangeListener;
             sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Sensores sen = listsen.get(position);
                     switchChangeListener.onSwitchChanged(sen.getFeed_key(), isChecked);
+
+                    if(isChecked){
+                        performGetRequest(sen.getFeed_key());
+                    }
                 }
             });
+        }
+
+        private void performGetRequest(String feedKey) {
+            RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
+            if("acceso".equals(feedKey)){
+                Call<List<Sensores>> accesoCall = requestSensors.abrirPuerta();
+            }
+            else if("alarma".equals(feedKey)){
+                Call<List<Sensores>> alarmaCall = requestSensors.apagarAlarma();
+            }
+            else if("leds".equals(feedKey)){
+                Call<List<Sensores>> ledsCall = requestSensors.modificarluces();
+            }
         }
 
         public void setData(Sensores sen) {

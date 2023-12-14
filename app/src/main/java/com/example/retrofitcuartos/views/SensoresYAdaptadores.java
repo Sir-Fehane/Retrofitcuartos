@@ -47,12 +47,6 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         Intent info = getIntent();
         String idcuarto = info.getStringExtra("id");
         rcv = findViewById(R.id.sensorsitem);
-        sns = new SensorsAdapter(sensList, new SwitchChangeListener() {
-            @Override
-            public void onSwitchChanged(String feed_key, boolean isChecked) {
-
-            }
-        });
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
