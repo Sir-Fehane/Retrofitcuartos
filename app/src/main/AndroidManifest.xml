@@ -19,7 +19,7 @@
             android:name=".UsuariosVista"
             android:exported="false" />
         <activity
-            android:name=".SensoresYAdaptadores"
+            android:name=".views.SensoresYAdaptadores"
             android:exported="false" />
         <activity
             android:name=".SensorItems"
