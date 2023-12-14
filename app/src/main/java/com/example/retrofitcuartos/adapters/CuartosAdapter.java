@@ -67,6 +67,7 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
             tvTitle= itemView.findViewById(R.id.tvTitle);
             tvBody= itemView.findViewById(R.id.tvBody);
             tvID=itemView.findViewById(R.id.tvID);
+            cuarto = itemView.findViewById(R.id.cuarto);
         }
         public void setData(Cuartos cua) {
             tvTitle.setText(cua.getNombre());
@@ -76,7 +77,7 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     Intent sensores = new Intent(itemView.getContext(), SensoresYAdaptadores.class);
-                    sensores.putExtra("id",cua.getId());
+                    sensores.putExtra("id","2");
                     itemView.getContext().startActivity(sensores);
                 }
             });

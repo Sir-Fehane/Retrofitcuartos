@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.retrofitcuartos.R;
 import com.example.retrofitcuartos.adapters.CuartosAdapter;
 import com.example.retrofitcuartos.models.Cuartos;
+import com.example.retrofitcuartos.request.ApiInterface;
+import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
@@ -42,8 +44,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchCuartos() {
+        String key = " Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vNTQuMTYxLjUxLjU0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzAyNTk1OTU0LCJleHAiOjE3MDI1OTk1NTQsIm5iZiI6MTcwMjU5NTk1NCwianRpIjoiV3VoVzRkMWJOeWk5R2JFOSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.RWGuw9r2CBfy4ULRgU62Kaave9R6QaRsAg76QGdxEOo";
         pb.setVisibility(View.VISIBLE);
-        RetrofitClient.getRetrofitClient().getCuartos().enqueue(new Callback<List<Cuartos>>() {
+
+        ApiInterface apiInterface = RetrofitClient.getRetrofitClient().create(ApiInterface.class);
+        Call<List<Cuartos>> call = apiInterface.getCuartos(key);
+                call.enqueue(new Callback<List<Cuartos>>() {
             @Override
             public void onResponse(Call<List<Cuartos>> call, Response<List<Cuartos>> response) {
                 if(response.isSuccessful() && response.body() != null)
