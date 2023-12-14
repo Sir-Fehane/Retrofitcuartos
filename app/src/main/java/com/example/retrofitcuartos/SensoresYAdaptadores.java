@@ -40,7 +40,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensores_yadaptadores);
         Intent info = getIntent();
-        int idcuarto = info.getIntExtra("id",0);
+        String idcuarto = info.getStringExtra("id");
         rcv = findViewById(R.id.sensorsitem);
         sns = new SensorsAdapter(sensList);
         rcv.setLayoutManager(new LinearLayoutManager(this));

@@ -1,11 +1,11 @@
 package com.example.retrofitcuartos.models;
 
 public class Cuartos {
-    private int id;
+    private String id;
     private String nombre;
     private String propietario;
 
-    public Cuartos(int id, String nombre, String propietario) {
+    public Cuartos(String id, String nombre, String propietario) {
         this.nombre = nombre;
         this.propietario = propietario;
         this.id = id;
@@ -19,11 +19,11 @@ public class Cuartos {
         this.nombre = nombre;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
