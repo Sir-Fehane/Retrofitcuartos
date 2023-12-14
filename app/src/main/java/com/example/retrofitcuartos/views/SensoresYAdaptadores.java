@@ -1,15 +1,19 @@
 package com.example.retrofitcuartos.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +41,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
     String idcuarto;
     String Title;
     String text;
+    private int notifID = 1;
     NotificationManagerCompat notificationManagerCompat;
     Notification notification;
 
@@ -45,38 +50,104 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensores_yadaptadores);
         Intent info = getIntent();
-        String idcuarto = info.getStringExtra("id");
+        int idcuarto = info.getIntExtra("id", 0);
         rcv = findViewById(R.id.sensorsitem);
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
-        fetchSensors(idcuarto);
-
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("notif","ServSecurity", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+            fetchSensors(idcuarto);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1809);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"notif")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("notif", "ServSecurity", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager.getNotificationChannel("notif") == null) {
+                manager.createNotificationChannel(channel);
+            }
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "notif")
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle(Title)
                 .setContentText(text);
         notification = builder.build();
         notificationManagerCompat = NotificationManagerCompat.from(this);
     }
-    private void fetchSensors(String idcuartos) {
+
+    private void fetchSensors(int idcuartos) {
         RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
         Call<List<Sensores>> call = requestSensors.getSensores(idcuartos);
         call.enqueue(new Callback<List<Sensores>>() {
             @Override
             public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
-                if(response.isSuccessful() && response.body() != null)
-                {
+                if (response.isSuccessful() && response.body() != null) {
                     sensList = response.body();
                     sns.setSensorDataList(sensList);
                     sns.notifyDataSetChanged();
 
+                    for (Sensores sensor : sensList) {
+                        if ("sonido".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) > 3120) {
+                            if ("alarma".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) != 1) {
+                                sendSoundNotification();
+                            }
+                        }
+                        if ("polvo".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) > 0.8) {
+                            sendDirtNotification();
+                        }
+                        if ("alarma".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) == 1) {
+                            sendAlarmNotification();
+                        }
+                        if ("voltaje".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) > 4.5) {
+                            sendVoltNotification();
+                        }
+                    }
+
+                }
+            }
+
+            private void sendVoltNotification() {
+                Title = "Sobrecarga de Voltaje";
+                text = "Hay una sobrecarga de voltaje en tus servidores.";
+                if (ContextCompat.checkSelfPermission(SensoresYAdaptadores.this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManagerCompat.notify(notifID++, notification);
+                } else {
+                    // You might want to request the VIBRATE permission here
+                    ActivityCompat.requestPermissions(SensoresYAdaptadores.this, new String[]{Manifest.permission.VIBRATE}, 1823);
+                }
+            }
+
+            private void sendAlarmNotification() {
+                Title = "Humo en Servidores";
+                text = "Algo se quemo en los servidores.";
+                if (ContextCompat.checkSelfPermission(SensoresYAdaptadores.this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManagerCompat.notify(notifID++, notification);
+                } else {
+                    // You might want to request the VIBRATE permission here
+                    ActivityCompat.requestPermissions(SensoresYAdaptadores.this, new String[]{Manifest.permission.VIBRATE}, 1823);
+                }
+            }
+
+            private void sendDirtNotification() {
+                Title = "Polvo en Servidores";
+                text = "Hay falta de mantenimiento en los servidores.";
+                if (ContextCompat.checkSelfPermission(SensoresYAdaptadores.this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManagerCompat.notify(notifID++, notification);
+                } else {
+                    // You might want to request the VIBRATE permission here
+                    ActivityCompat.requestPermissions(SensoresYAdaptadores.this, new String[]{Manifest.permission.VIBRATE}, 1823);
+                }
+            }
+
+            private void sendSoundNotification() {
+                Title = "Sonidos en Servidores";
+                text = "Parece que hay sonido en los servidores.";
+                if (ContextCompat.checkSelfPermission(SensoresYAdaptadores.this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManagerCompat.notify(notifID++, notification);
+                } else {
+                    // You might want to request the VIBRATE permission here
+                    ActivityCompat.requestPermissions(SensoresYAdaptadores.this, new String[]{Manifest.permission.VIBRATE}, 1823);
                 }
             }
 
@@ -87,5 +158,4 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             }
         });
     }
-
 }

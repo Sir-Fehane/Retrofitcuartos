@@ -21,7 +21,7 @@ public class SensorsRepository {
     void setRetrofit() {
         retrofit = RetrofitClient.getRetrofitClient();
     }
-    public MutableLiveData<List<Sensores>> getSensors(String idcuarto) {
+    public MutableLiveData<List<Sensores>> getSensors(int idcuarto) {
         setRetrofit();
         RequestSensors sensorsreq = retrofit.create(RequestSensors.class);
         Call<List<Sensores>> sensCall = sensorsreq.getSensores(idcuarto);

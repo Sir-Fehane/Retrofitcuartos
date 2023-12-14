@@ -13,7 +13,7 @@ import java.util.List;
 public class SensorsViewModel extends ViewModel {
     private MutableLiveData<List<Sensores>> sensores;
     private SensorsRepository sensorsRepository;
-    public LiveData<List<Sensores>> getSensores (String id) {
+    public LiveData<List<Sensores>> getSensores (int id) {
         if (sensores == null) {
             sensores = new MutableLiveData<>();
             loadSensors(id);
@@ -21,7 +21,7 @@ public class SensorsViewModel extends ViewModel {
         return sensores;
     }
 
-    private void loadSensors (String id) {
+    private void loadSensors (int id) {
         if (sensorsRepository == null) {
             sensorsRepository = new SensorsRepository();
         }
