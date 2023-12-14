@@ -52,18 +52,26 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         }
 
         public void setData(Sensores sen) {
-            if("sensor".equals(sen.getTipo())){
+            if("normal".equals(sen.getTipo())){
                 nam.setText(sen.getFeed_key());
             }
             else{
-                if("Temperatura".equals(sen.getFeed_key())){
+                if("temperatura".equals(sen.getFeed_key())){
                     sw.setText("Ventilacion");
+                    sw.setClickable(false);
+                    sw.setFocusable(false);
+                    sw.setFocusableInTouchMode(false);
                 }
                 else if("NFC".equals(sen.getFeed_key())){
                     sw.setText("Puerta");
                 }
-                else if("Humo".equals(sen.getFeed_key())){
+                else if("humo".equals(sen.getFeed_key())){
                     sw.setText("Alarma");
+                    if("Alarma".equals(sen.getFeed_key()) && "1".equals(sen.getValue())){
+                        sw.setClickable(true);
+                        sw.setFocusable(true);
+                        sw.setFocusableInTouchMode(true);
+                    }
                 }
                 else{
                     sw.setVisibility(View.GONE);
