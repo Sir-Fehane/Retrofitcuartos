@@ -80,11 +80,11 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
 
-                    Toast.makeText(this, "Error al iniciar sesión: Respuesta nula", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 // Manejar el caso donde userResponse es nulo
-                Toast.makeText(this, "Error al iniciar sesión: Respuesta nula", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
             }
         });
     }
