@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("/api/recibir-datos")
+    @GET("/api/auth/recibir-datos")
     Call<List<Cuartos>> getCuartos();
 
 }
