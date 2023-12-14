@@ -11,22 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitcuartos.R;
 import com.example.retrofitcuartos.models.Sensores;
+import com.example.retrofitcuartos.request.RequestSensors;
+import com.example.retrofitcuartos.request.SwitchChangeListener;
+import com.example.retrofitcuartos.retrofit.RetrofitClient;
 
 import java.util.List;
 
+import retrofit2.Call;
+
 public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.SensorsHolder> {
     private List<Sensores> listsen;
-
-    public SensorsAdapter(List<Sensores> listsen) {
-        this.listsen = listsen;
-    }
+    private SwitchChangeListener switchChangeListener;
 
     @NonNull
     @Override
     public SensorsAdapter.SensorsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater lyf = LayoutInflater.from(parent.getContext());
         View v = lyf.inflate(R.layout.activity_sensor_items,parent,false);
-        return new SensorsHolder(v);
+        return new SensorsHolder(v, switchChangeListener);
     }
 
     @Override
@@ -40,30 +42,76 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         return listsen.size();
     }
 
+    public void setSensorDataList(List<Sensores> sensList) {
+        this.listsen = sensList;
+    }
+
     public class SensorsHolder extends RecyclerView.ViewHolder {
         TextView nam;
         TextView dat;
         Switch sw;
-        public SensorsHolder(@NonNull View itemView) {
+        SwitchChangeListener switchChangeListener;
+        public SensorsHolder(@NonNull View itemView, SwitchChangeListener switchChangeListener) {
             super(itemView);
             nam = itemView.findViewById(R.id.sensor);
             dat = itemView.findViewById(R.id.data);
             sw = itemView.findViewById(R.id.actor);
+            this.switchChangeListener = switchChangeListener;
+            sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Sensores sen = listsen.get(position);
+                    switchChangeListener.onSwitchChanged(sen.getFeed_key(), isChecked);
+
+                    if(isChecked){
+                        performGetRequest(sen.getFeed_key());
+                    }
+                }
+            });
+        }
+
+        private void performGetRequest(String feedKey) {
+            RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
+            if("acceso".equals(feedKey)){
+                Call<List<Sensores>> accesoCall = requestSensors.abrirPuerta();
+            }
+            else if("alarma".equals(feedKey)){
+                Call<List<Sensores>> alarmaCall = requestSensors.apagarAlarma();
+            }
+            else if("leds".equals(feedKey)){
+                Call<List<Sensores>> ledsCall = requestSensors.modificarluces();
+            }
         }
 
         public void setData(Sensores sen) {
             if("normal".equals(sen.getTipo())){
                 nam.setText(sen.getFeed_key());
-            }
-            else{
                 if("temperatura".equals(sen.getFeed_key())){
                     sw.setText("Ventilacion");
                     sw.setClickable(false);
                     sw.setFocusable(false);
                     sw.setFocusableInTouchMode(false);
+                    if(Integer.parseInt(sen.getValue())>30){
+                        sw.setChecked(true);
+                    }
+                    else {
+                        sw.setChecked(false);
+                    }
                 }
-                else if("NFC".equals(sen.getFeed_key())){
+                else if("acceso".equals(sen.getFeed_key())){
                     sw.setText("Puerta");
+                    if("1".equals(sen.getValue())){
+                        sw.setClickable(false);
+                        sw.setFocusable(false);
+                        sw.setFocusableInTouchMode(false);
+                        sw.setChecked(true);
+                    }
+                    else {
+                        sw.setClickable(true);
+                        sw.setFocusable(true);
+                        sw.setFocusableInTouchMode(true);
+                        sw.setChecked(false);
+                    }
                 }
                 else if("humo".equals(sen.getFeed_key())){
                     sw.setText("Alarma");
@@ -71,13 +119,26 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
                         sw.setClickable(true);
                         sw.setFocusable(true);
                         sw.setFocusableInTouchMode(true);
+                        sw.setChecked(true);
+                    }
+                    else{
+                        sw.setClickable(false);
+                        sw.setFocusable(false);
+                        sw.setFocusableInTouchMode(false);
+                        sw.setChecked(false);
                     }
                 }
-                else{
-                    sw.setVisibility(View.GONE);
-                }
+            }
+            else if("leds".equals(sen.getFeed_key())){
+                sw.setText("Luz");
+                nam.setVisibility(View.GONE);
+                dat.setVisibility(View.GONE);
+            }
+            else{
+                sw.setVisibility(View.GONE);
             }
             dat.setText(String.valueOf(sen.getValue()));
+
         }
     }
 }

@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,7 +22,7 @@
             android:name=".UsuariosVista"
             android:exported="false" />
         <activity
-            android:name=".SensoresYAdaptadores"
+            android:name=".views.SensoresYAdaptadores"
             android:exported="false" />
         <activity
             android:name=".SensorItems"

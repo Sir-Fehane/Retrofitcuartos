@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitcuartos.R;
-import com.example.retrofitcuartos.SensoresYAdaptadores;
+import com.example.retrofitcuartos.views.SensoresYAdaptadores;
 import com.example.retrofitcuartos.models.Cuartos;
 
 import java.util.List;
