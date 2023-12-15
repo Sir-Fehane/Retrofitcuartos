@@ -16,6 +16,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -60,7 +62,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         sns = new SensorsAdapter(sensList, switchChangeListener);
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
-        fetchSensors(idcuarto);
+        startPeriodicDataRefresh();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("notif", "ServSecurity", NotificationManager.IMPORTANCE_DEFAULT);
@@ -75,6 +77,12 @@ public class SensoresYAdaptadores extends AppCompatActivity {
                 .setContentText(text);
         notification = builder.build();
         notificationManagerCompat = NotificationManagerCompat.from(this);
+    }
+    private void startPeriodicDataRefresh() {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            fetchSensors(idcuarto);
+            startPeriodicDataRefresh();
+        }, 5000);
     }
 
     private void fetchSensors(String idcuartos) {
