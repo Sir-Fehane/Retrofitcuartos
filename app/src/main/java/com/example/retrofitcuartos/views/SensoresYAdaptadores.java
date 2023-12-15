@@ -45,6 +45,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
     String Title;
     String text;
     private int notifID = 1;
+    SwitchChangeListener switchChangeListener;
     NotificationManagerCompat notificationManagerCompat;
     Notification notification;
 
@@ -56,7 +57,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         idcuarto = info.getStringExtra("id");
         rcv = findViewById(R.id.sensorsitem);
         rcv.setLayoutManager(new LinearLayoutManager(this));
-        sns = new SensorsAdapter(sensList);
+        sns = new SensorsAdapter(sensList, switchChangeListener);
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
         fetchSensors(idcuarto);
@@ -83,6 +84,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    sensList.clear();
                     sensList = response.body();
                     sns.setSensorDataList(sensList);
                     sns.notifyDataSetChanged();
