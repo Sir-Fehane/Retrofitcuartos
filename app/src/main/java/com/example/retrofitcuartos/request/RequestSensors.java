@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface RequestSensors {
-    @GET("Adtafruit/recibirdatos/{idcuarto}")
+    @GET("Adafruit/recibirdatos/{idcuarto}")
     Call<List<Sensores>> getSensores(@Path("idcuarto")String idcuarto);
     @GET("Adafruit/alarma")
     Call<List<Sensores>> apagarAlarma();
