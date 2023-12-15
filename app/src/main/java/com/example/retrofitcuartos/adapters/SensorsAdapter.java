@@ -15,6 +15,7 @@ import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.request.SwitchChangeListener;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,6 +23,9 @@ import retrofit2.Call;
 public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.SensorsHolder> {
     private List<Sensores> listsen;
     private SwitchChangeListener switchChangeListener;
+    public SensorsAdapter(List<Sensores> listsen) {
+        this.listsen = listsen;
+    }
 
     @NonNull
     @Override
@@ -42,9 +46,6 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         return listsen.size();
     }
 
-    public void setSensorDataList(List<Sensores> sensList) {
-        this.listsen = sensList;
-    }
 
     public class SensorsHolder extends RecyclerView.ViewHolder {
         TextView nam;

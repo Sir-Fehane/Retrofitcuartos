@@ -31,10 +31,7 @@ public class SensorsRepository {
         sensCall.enqueue(new Callback<SensorList>() {
             @Override
             public void onResponse(Call<SensorList> call, Response<SensorList> response) {
-                if (response.isSuccessful()) {
-                    SensorList senss = response.body();
-                    mutableLiveData.setValue(senss);
-                }
+                SensorList sensorList;
             }
 
             @Override

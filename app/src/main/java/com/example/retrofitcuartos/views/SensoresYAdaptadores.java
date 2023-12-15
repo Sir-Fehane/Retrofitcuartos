@@ -57,11 +57,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
-            fetchSensors(idcuarto);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1809);
-        }
+        fetchSensors(idcuarto);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("notif", "ServSecurity", NotificationManager.IMPORTANCE_DEFAULT);
@@ -86,10 +82,10 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             public void onResponse(Call<SensorList> call, Response<SensorList> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     sensList = response.body();
-                    sns.setSensorDataList(sensList);
+                    sns = new SensorsAdapter(sensList.getSensorDataList());
                     sns.notifyDataSetChanged();
 
-                    for (Sensores sensor : sensList) {
+                    for (Sensores sensor : sensList.getSensorDataList()) {
                         if ("sonido".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) > 3120) {
                             if ("alarma".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) != 1) {
                                 sendSoundNotification();
