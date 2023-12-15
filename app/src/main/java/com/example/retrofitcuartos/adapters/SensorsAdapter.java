@@ -26,6 +26,9 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
     public SensorsAdapter(List<Sensores> listsen) {
         this.listsen = listsen;
     }
+    public void setSensorDataList(List<Sensores> sensList) {
+        this.listsen = sensList;
+    }
 
     @NonNull
     @Override

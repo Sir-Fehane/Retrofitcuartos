@@ -56,6 +56,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         idcuarto = info.getStringExtra("id");
         rcv = findViewById(R.id.sensorsitem);
         rcv.setLayoutManager(new LinearLayoutManager(this));
+        sns = new SensorsAdapter(sensList);
         rcv.setAdapter(sns);
         rcv.setHasFixedSize(true);
         fetchSensors(idcuarto);
@@ -83,6 +84,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     sensList = response.body();
+                    sns.setSensorDataList(sensList);
                     sns.notifyDataSetChanged();
 
                     for (Sensores sensor:sensList) {
