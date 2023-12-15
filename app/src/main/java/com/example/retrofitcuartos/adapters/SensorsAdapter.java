@@ -95,7 +95,7 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
                     sw.setClickable(false);
                     sw.setFocusable(false);
                     sw.setFocusableInTouchMode(false);
-                    if(Integer.parseInt(sen.getValue())>30){
+                    if(Float.parseFloat(sen.getValue())>30){
                         sw.setChecked(true);
                     }
                     else {
