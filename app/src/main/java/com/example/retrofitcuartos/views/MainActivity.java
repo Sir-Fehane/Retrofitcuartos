@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.retrofitcuartos.R;
+import com.example.retrofitcuartos.UsuariosVista;
 import com.example.retrofitcuartos.adapters.CuartosAdapter;
 import com.example.retrofitcuartos.models.Cuartos;
 import com.example.retrofitcuartos.request.ApiInterface;
@@ -69,4 +72,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void ayuda()
+    {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, UsuariosVista.class);
+                startActivity(intent);
+
+            }
+        }, 500); // 5000 milisegundos (5 segundos)
+    }
 }
+
