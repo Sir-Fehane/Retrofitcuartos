@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchCuartos() {
-        String key = " Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vNTQuMTYxLjUxLjU0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzAyNjM2NjI3LCJleHAiOjE3MDI2NDAyMjcsIm5iZiI6MTcwMjYzNjYyNywianRpIjoiRzFzaThsMUJFU2tpZDdRSSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.o5aDTzFvguXgwF4_DH7QqCUlnsn5rS0t3fjx1u1ik_4";
+        String key = " Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vNTQuMTYxLjUxLjU0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzAyNjQxNTA0LCJleHAiOjE3MDI2NDUxMDQsIm5iZiI6MTcwMjY0MTUwNCwianRpIjoibnpodTk0RDc0Z2oweWMyNSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.xKl5Wud6TBRPNjdlTfGtHYQsjrNHD1olz9LnMR1GWlQ";
         pb.setVisibility(View.VISIBLE);
 
         ApiInterface apiInterface = RetrofitClient.getRetrofitClient().create(ApiInterface.class);
