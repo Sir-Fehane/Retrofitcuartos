@@ -27,6 +27,7 @@ import com.example.retrofitcuartos.models.Sensores;
 import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.request.SwitchChangeListener;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -152,6 +153,8 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             @Override
             public void onFailure(Call<SensorList> call, Throwable t) {
                 Toast.makeText(SensoresYAdaptadores.this, t.getMessage(),Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.error), t.getMessage(), Snackbar.LENGTH_LONG);
+                snackbar.show();
 
             }
         });
