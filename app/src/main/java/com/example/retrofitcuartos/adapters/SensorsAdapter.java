@@ -90,7 +90,9 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
         public void setData(Sensores sen) {
             if("normal".equals(sen.getTipo())){
                 nam.setText(sen.getFeed_key());
+                sw.setVisibility(View.GONE);
                 if("temperatura".equals(sen.getFeed_key())){
+                    sw.setVisibility(View.VISIBLE);
                     sw.setText("Ventilacion");
                     sw.setClickable(false);
                     sw.setFocusable(false);
@@ -104,6 +106,7 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
                 }
                 else if("acceso".equals(sen.getFeed_key())){
                     sw.setText("Puerta");
+                    sw.setVisibility(View.VISIBLE);
                     if("1".equals(sen.getValue())){
                         sw.setClickable(false);
                         sw.setFocusable(false);
@@ -118,6 +121,7 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
                     }
                 }
                 else if("humo".equals(sen.getFeed_key())){
+                    sw.setVisibility(View.VISIBLE);
                     sw.setText("Alarma");
                     if("Alarma".equals(sen.getFeed_key()) && "1".equals(sen.getValue())){
                         sw.setClickable(true);
