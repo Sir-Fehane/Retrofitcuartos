@@ -76,8 +76,10 @@ public class CuartosAdapter extends RecyclerView.Adapter<CuartosAdapter.ViewHold
             cuarto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Cuartos cua = cuartoslist.get(getAdapterPosition());
+                    String cuartoid = cua.getId();
                     Intent sensores = new Intent(itemView.getContext(), SensoresYAdaptadores.class);
-                    sensores.putExtra("id","2");
+                    sensores.putExtra("id",cuartoid);
                     itemView.getContext().startActivity(sensores);
                 }
             });
