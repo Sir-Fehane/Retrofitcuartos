@@ -22,11 +22,13 @@ import android.widget.Toast;
 import com.example.retrofitcuartos.R;
 import com.example.retrofitcuartos.adapters.SensorsAdapter;
 import com.example.retrofitcuartos.models.Cuartos;
+import com.example.retrofitcuartos.models.SensorList;
 import com.example.retrofitcuartos.models.Sensores;
 import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.request.SwitchChangeListener;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ import retrofit2.Response;
 
 public class SensoresYAdaptadores extends AppCompatActivity {
     RecyclerView rcv;
-    List<Sensores> sensList = new ArrayList<>();
+    SensorList sensList;
     SensorsAdapter sns;
     String idcuarto;
     String Title;
@@ -78,10 +80,10 @@ public class SensoresYAdaptadores extends AppCompatActivity {
 
     private void fetchSensors(String idcuartos) {
         RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
-        Call<List<Sensores>> call = requestSensors.getSensores(idcuartos);
-        call.enqueue(new Callback<List<Sensores>>() {
+        Call<SensorList> call = requestSensors.getSensores(idcuartos);
+        call.enqueue(new Callback<SensorList>() {
             @Override
-            public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
+            public void onResponse(Call<SensorList> call, Response<SensorList> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     sensList = response.body();
                     sns.setSensorDataList(sensList);
@@ -152,7 +154,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Sensores>> call, Throwable t) {
+            public void onFailure(Call<SensorList> call, Throwable t) {
                 Toast.makeText(SensoresYAdaptadores.this, t.getMessage(),Toast.LENGTH_LONG).show();
 
             }

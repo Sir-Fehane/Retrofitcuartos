@@ -4,6 +4,7 @@ import android.view.PixelCopy;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.retrofitcuartos.models.SensorList;
 import com.example.retrofitcuartos.models.Sensores;
 import com.example.retrofitcuartos.request.RequestSensors;
 import com.example.retrofitcuartos.retrofit.RetrofitClient;
@@ -21,23 +22,23 @@ public class SensorsRepository {
     void setRetrofit() {
         retrofit = RetrofitClient.getRetrofitClient();
     }
-    public MutableLiveData<List<Sensores>> getSensors(String idcuarto) {
+    public MutableLiveData<SensorList> getSensors(String idcuarto) {
         setRetrofit();
         RequestSensors sensorsreq = retrofit.create(RequestSensors.class);
-        Call<List<Sensores>> sensCall = sensorsreq.getSensores(idcuarto);
-        MutableLiveData<List<Sensores>> mutableLiveData = new MutableLiveData<>();
+        Call<SensorList> sensCall = sensorsreq.getSensores(idcuarto);
+        MutableLiveData<SensorList> mutableLiveData = new MutableLiveData<>();
 
-        sensCall.enqueue(new Callback<List<Sensores>>() {
+        sensCall.enqueue(new Callback<SensorList>() {
             @Override
-            public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
+            public void onResponse(Call<SensorList> call, Response<SensorList> response) {
                 if (response.isSuccessful()) {
-                    List<Sensores> senss = response.body();
+                    SensorList senss = response.body();
                     mutableLiveData.setValue(senss);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Sensores>> call, Throwable t) {
+            public void onFailure(Call<SensorList> call, Throwable t) {
 
             }
         });
