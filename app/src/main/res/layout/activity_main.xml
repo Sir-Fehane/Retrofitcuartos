@@ -6,13 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".views.MainActivity"
     >
+    <Button
+        android:id="@+id/boton"
+        android:onClick="ayuda"
+        android:layout_width="50dp"
+        android:layout_height="75dp"
+        app:layout_constraintEnd_toStartOf="@id/topbarra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Usuario"
+        android:textSize="16sp"
+        android:background="@color/black">
+
+    </Button>
     <TextView
         android:id="@+id/topbarra"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="75dp"
         android:background="?attr/colorOnPrimaryContainer"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/boton"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         android:text="Cuartos"
         android:gravity="center"
