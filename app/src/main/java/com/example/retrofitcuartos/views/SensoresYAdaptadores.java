@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 public class SensoresYAdaptadores extends AppCompatActivity {
     RecyclerView rcv;
-    SensorList sensList;
+    List<Sensores> sensList = new ArrayList<>();
     SensorsAdapter sns;
     String idcuarto;
     String Title;
@@ -77,16 +77,15 @@ public class SensoresYAdaptadores extends AppCompatActivity {
 
     private void fetchSensors(String idcuartos) {
         RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
-        Call<SensorList> call = requestSensors.getSensores(idcuartos);
-        call.enqueue(new Callback<SensorList>() {
+        Call<List<Sensores>> call = requestSensors.getSensores(idcuartos);
+        call.enqueue(new Callback<List<Sensores>>() {
             @Override
-            public void onResponse(Call<SensorList> call, Response<SensorList> response) {
+            public void onResponse(Call<List<Sensores>> call, Response<List<Sensores>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     sensList = response.body();
-                    sns = new SensorsAdapter(sensList.getSensorDataList());
                     sns.notifyDataSetChanged();
 
-                    for (Sensores sensor : sensList.getSensorDataList()) {
+                    for (Sensores sensor:sensList) {
                         if ("sonido".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) > 3120) {
                             if ("alarma".equals(sensor.getFeed_key()) && Float.parseFloat(sensor.getValue()) != 1) {
                                 sendSoundNotification();
@@ -151,7 +150,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SensorList> call, Throwable t) {
+            public void onFailure(Call<List<Sensores>> call, Throwable t) {
                 Toast.makeText(SensoresYAdaptadores.this, t.getMessage(),Toast.LENGTH_LONG).show();
                 Snackbar snackbar = Snackbar.make(findViewById(R.id.error), t.getMessage(), Snackbar.LENGTH_LONG);
                 snackbar.show();
