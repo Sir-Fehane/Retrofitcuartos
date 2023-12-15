@@ -141,7 +141,7 @@ public class SensorsAdapter  extends RecyclerView.Adapter<SensorsAdapter.Sensors
             else{
                 sw.setVisibility(View.GONE);
             }
-            dat.setText(String.valueOf(Float.parseFloat(sen.getValue())));
+            dat.setText(Float.toString(Float.parseFloat(sen.getValue())));
 
         }
     }
