@@ -50,7 +50,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensores_yadaptadores);
         Intent info = getIntent();
-        int idcuarto = info.getIntExtra("id", 0);
+        idcuarto = info.getStringExtra("id");
         rcv = findViewById(R.id.sensorsitem);
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setAdapter(sns);
@@ -76,7 +76,7 @@ public class SensoresYAdaptadores extends AppCompatActivity {
         notificationManagerCompat = NotificationManagerCompat.from(this);
     }
 
-    private void fetchSensors(int idcuartos) {
+    private void fetchSensors(String idcuartos) {
         RequestSensors requestSensors = RetrofitClient.getRetrofitClient().create(RequestSensors.class);
         Call<List<Sensores>> call = requestSensors.getSensores(idcuartos);
         call.enqueue(new Callback<List<Sensores>>() {
